@@ -1,0 +1,2 @@
+This is a test file to verify the hooks system is working correctly.
+The PostToolUse hook should log this Write operation to activity.log.
