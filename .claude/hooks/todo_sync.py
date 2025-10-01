@@ -37,28 +37,39 @@ def sync_claude_todos(claude_todos):
         else:  # pending or in_progress
             claude_incomplete.append(task)
 
-    # Read existing todos
-    file_incomplete, file_completed = read_todo_tasks()
+    # Get sync mode from config
+    config = load_config()
+    sync_mode = config.get('todo_sync', {}).get('sync_mode', 'merge')
 
-    # Merge todos (Claude's take precedence for conflicts)
-    # Add new completed tasks from Claude
-    for task in claude_completed:
-        if task not in file_completed and task not in file_incomplete:
-            file_completed.append(task)
-        # Move from incomplete to completed if Claude marked it done
-        elif task in file_incomplete:
-            file_incomplete.remove(task)
-            if task not in file_completed:
+    if sync_mode == 'replace':
+        # Complete replacement - Claude's todos are the source of truth
+        file_incomplete = claude_incomplete
+        file_completed = claude_completed
+    else:
+        # Original merge logic for backward compatibility
+        # Read existing todos
+        file_incomplete, file_completed = read_todo_tasks()
+
+        # Merge todos (Claude's take precedence for conflicts)
+        # Add new completed tasks from Claude
+        for task in claude_completed:
+            if task not in file_completed and task not in file_incomplete:
                 file_completed.append(task)
+            # Move from incomplete to completed if Claude marked it done
+            elif task in file_incomplete:
+                file_incomplete.remove(task)
+                if task not in file_completed:
+                    file_completed.append(task)
 
-    # Add new incomplete tasks from Claude
-    for task in claude_incomplete:
-        if task not in file_incomplete and task not in file_completed:
-            file_incomplete.append(task)
+        # Add new incomplete tasks from Claude
+        for task in claude_incomplete:
+            if task not in file_incomplete and task not in file_completed:
+                file_incomplete.append(task)
 
     # Write updated todos
     if write_todo_file(file_incomplete, file_completed):
-        return True, f"{len(file_incomplete)} pending, {len(file_completed)} done"
+        mode_msg = f"[{sync_mode} mode]"
+        return True, f"{mode_msg} {len(file_incomplete)} pending, {len(file_completed)} done"
     else:
         return False, "Failed to write todo.md"
 
@@ -84,15 +95,14 @@ def main():
     tool_input = input_data.get('tool_input', {})
     todos = tool_input.get('todos', [])
 
-    if todos:
-        # Sync to file
-        success, message = sync_claude_todos(todos)
-        if success:
-            log_activity(f"Todo sync: {message}", "INFO")
-            print("✅ Todos synced to todo.md", file=sys.stderr)
-        else:
-            log_activity(f"Todo sync failed: {message}", "ERROR")
-            print("⚠️ Todo sync had issues", file=sys.stderr)
+    # Always sync, even if todos is empty (to clear the file in replace mode)
+    success, message = sync_claude_todos(todos)
+    if success:
+        log_activity(f"Todo sync: {message}", "INFO")
+        print("✅ Todos synced to todo.md", file=sys.stderr)
+    else:
+        log_activity(f"Todo sync failed: {message}", "ERROR")
+        print("⚠️ Todo sync had issues", file=sys.stderr)
 
     exit_allow()
 

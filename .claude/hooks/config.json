@@ -39,6 +39,7 @@
   },
   "todo_sync": {
     "auto_sync_enabled": true,
+    "sync_mode": "replace",
     "merge_strategy": "claude_wins"
   },
   "prompt_enhancer": {
