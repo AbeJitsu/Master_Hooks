@@ -1,0 +1,54 @@
+{
+  "paths": {
+    "activity_log": ".claude/hooks/activity.log",
+    "todo_file": "todo.md"
+  },
+  "logging": {
+    "enabled": true,
+    "timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "max_file_size_mb": 10
+  },
+  "bash_validator": {
+    "fail_on_dangerous": true,
+    "warn_on_risky": true,
+    "dangerous_patterns": [
+      "rm\\s+-rf\\s+/",
+      "rm\\s+-rf\\s+\\*",
+      ":\\(\\)\\s*{\\s*:\\|\\s*:&\\s*}",
+      ">\\s*/dev/sd[a-z]",
+      "dd\\s+.*of=/dev/sd[a-z]",
+      "chmod\\s+-R\\s+777\\s+/",
+      "chown\\s+-R.*/",
+      "mkfs\\.",
+      "curl.*\\|\\s*sh",
+      "wget.*\\|\\s*sh"
+    ],
+    "warning_patterns": [
+      "sudo\\s+",
+      "rm\\s+-rf",
+      "git\\s+push\\s+--force",
+      "git\\s+reset\\s+--hard",
+      ">>\\s*/etc/",
+      "pkill",
+      "killall"
+    ]
+  },
+  "stop_validator": {
+    "enforce_todos": true,
+    "allow_with_infinite_loop_protection": true
+  },
+  "todo_sync": {
+    "auto_sync_enabled": true,
+    "merge_strategy": "claude_wins"
+  },
+  "prompt_enhancer": {
+    "enabled": true,
+    "skip_keywords": ["todo", "task", "checklist", "incomplete", "completed"],
+    "max_incomplete_shown": 5,
+    "max_completed_shown": 3
+  },
+  "session_start": {
+    "show_todo_status": true,
+    "show_priority_task": true
+  }
+}
