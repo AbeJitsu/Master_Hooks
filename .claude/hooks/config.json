@@ -51,5 +51,19 @@
   "session_start": {
     "show_todo_status": true,
     "show_priority_task": true
+  },
+  "subagent_validator": {
+    "enabled": true,
+    "min_output_length": 50,
+    "error_keywords": [
+      "error",
+      "failed",
+      "could not",
+      "unable to",
+      "not found",
+      "exception",
+      "does not exist"
+    ],
+    "allow_empty_outputs": false
   }
 }

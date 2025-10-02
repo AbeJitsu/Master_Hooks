@@ -491,3 +491,35 @@ EOF
 [2025-10-01 21:17:49] ALLOWED: Bash: git status
 [2025-10-01 21:17:53] ALLOWED: Bash: git diff .claude/hooks/activity.log | head -20
 [2025-10-01 21:17:59] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:27:58] INFO: Session started with 0 pending tasks
+[2025-10-01 21:27:58] INFO: Session started with 0 pending tasks
+[2025-10-01 21:31:15] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:36:21] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:42:10] INFO: Todo sync: [replace mode] 5 pending, 0 done
+[2025-10-01 21:42:37] Write: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/subagent_validator.py
+[2025-10-01 21:42:44] INFO: Todo sync: [replace mode] 4 pending, 1 done
+[2025-10-01 21:42:52] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/config.json
+[2025-10-01 21:42:59] INFO: Todo sync: [replace mode] 3 pending, 2 done
+[2025-10-01 21:43:10] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/settings.json
+[2025-10-01 21:43:14] ALLOWED: Bash: chmod +x /Users/abereyes/Projects/Master_Hooks/.claude/hooks/subagent_validator.py
+[2025-10-01 21:43:44] INFO: Todo sync: [replace mode] 2 pending, 3 done
+[2025-10-01 21:44:01] ALLOWED: Bash: tail -20 /Users/abereyes/Projects/Master_Hooks/.claude/hooks/activity.log
+[2025-10-01 21:44:06] ALLOWED: Bash: tail -5 /Users/abereyes/Projects/Master_Hooks/.claude/hooks/activity.log | grep -i subagent
+[2025-10-01 21:44:15] ALLOWED: Bash: wc -l /Users/abereyes/Projects/Master_Hooks/.claude/hooks/*.py
+[2025-10-01 21:44:24] ALLOWED: Bash: tail -30 /Users/abereyes/Projects/Master_Hooks/.claude/hooks/activity.log
+[2025-10-01 21:44:30] ALLOWED: Bash: echo '{"session_id":"test","transcript_path":"nonexistent","hook_event_name":"SubagentStop","stop_hook_active":false}' | python3 .claude/hooks/subagent_validator.py; echo "Exit code: $?"
+[2025-10-01 21:44:48] ERROR: Error reading transcript: [Errno 2] No such file or directory: 'nonexistent'
+[2025-10-01 21:44:48] INFO: Empty transcript, allowing
+[2025-10-01 21:44:55] ALLOWED: Bash: cat .claude/settings.json | python3 -m json.tool | grep -A 10 SubagentStop
+[2025-10-01 21:45:13] INFO: Session started with 2 pending tasks
+[2025-10-01 21:45:13] INFO: Session started with 2 pending tasks
+[2025-10-01 21:45:51] INFO: Todo sync: [replace mode] 0 pending, 5 done
+[2025-10-01 21:46:04] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:48:54] INFO: SubagentStop: QA passed - No task info found - allowing
+[2025-10-01 21:48:59] ALLOWED: Bash: tail -20 /Users/abereyes/Projects/Master_Hooks/.claude/hooks/activity.log
+[2025-10-01 21:49:07] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:49:58] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:51:34] INFO: Prompt enhanced with todo context
+[2025-10-01 21:51:42] INFO: Stop allowed: All tasks complete
+[2025-10-01 21:52:07] INFO: Session started with 0 pending tasks
+[2025-10-01 21:52:07] INFO: Session started with 0 pending tasks
