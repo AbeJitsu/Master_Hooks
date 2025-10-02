@@ -65,5 +65,21 @@
       "does not exist"
     ],
     "allow_empty_outputs": false
+  },
+  "pre_compact": {
+    "enabled": true,
+    "snapshot_path": ".claude/state/pre_compact_snapshot.json",
+    "insights_path": ".claude/state/session_insights.md",
+    "preserve_todo_state": true,
+    "preserve_planning_notes": true,
+    "auto_vs_manual_different_handling": true
+  },
+  "session_end": {
+    "enabled": true,
+    "archive_path": ".claude/sessions",
+    "generate_summary": true,
+    "copy_transcript": false,
+    "auto_cleanup": true,
+    "rotate_activity_log_at_mb": 10
   }
 }

@@ -1,9 +1,11 @@
 # Todo List
 
+## Incomplete Tasks
+- [ ] Add comprehensive docstrings to hook_utils.py
+- [ ] Delete old documentation files (4 files)
+
 ## Completed Tasks
-- [x] Create subagent_validator.py hook script
-- [x] Update config.json with subagent validation rules
-- [x] Register SubagentStop hook in settings.json
-- [x] Test SubagentStop hook with Task tool
-- [x] Verify hook logging in activity.log
+- [x] Create new README.md with 5-minute quickstart (150 lines)
+- [x] Condense Hooks_reference.md to REFERENCE.md (remove duplication)
+- [x] Add PreCompact and SessionEnd documentation to REFERENCE.md
 

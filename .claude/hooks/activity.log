@@ -523,3 +523,118 @@ EOF
 [2025-10-01 21:51:42] INFO: Stop allowed: All tasks complete
 [2025-10-01 21:52:07] INFO: Session started with 0 pending tasks
 [2025-10-01 21:52:07] INFO: Session started with 0 pending tasks
+[2025-10-01 21:53:05] ALLOWED: Bash: ls -la /Users/abereyes/Projects/Master_Hooks/.claude/hooks/
+[2025-10-01 22:07:19] INFO: Todo sync: [replace mode] 8 pending, 0 done
+[2025-10-01 22:07:23] ALLOWED: Bash: mkdir -p /Users/abereyes/Projects/Master_Hooks/.claude/state /Users/abereyes/Projects/Master_Hooks/.claude/sessions
+[2025-10-01 22:07:24] ALLOWED: Bash: ls -la /Users/abereyes/Projects/Master_Hooks/.claude/
+[2025-10-01 22:07:32] INFO: Todo sync: [replace mode] 7 pending, 1 done
+[2025-10-01 22:08:09] Write: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/pre_compact.py
+[2025-10-01 22:08:18] ALLOWED: Bash: chmod +x /Users/abereyes/Projects/Master_Hooks/.claude/hooks/pre_compact.py
+[2025-10-01 22:11:06] INFO: Todo sync: [replace mode] 6 pending, 2 done
+[2025-10-01 22:11:59] Write: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/session_end.py
+[2025-10-01 22:12:08] ALLOWED: Bash: chmod +x /Users/abereyes/Projects/Master_Hooks/.claude/hooks/session_end.py
+[2025-10-01 22:12:25] INFO: Todo sync: [replace mode] 5 pending, 3 done
+[2025-10-01 22:12:38] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/config.json
+[2025-10-01 22:12:47] INFO: Todo sync: [replace mode] 4 pending, 4 done
+[2025-10-01 22:19:57] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/settings.json
+[2025-10-01 22:20:07] INFO: Todo sync: [replace mode] 3 pending, 5 done
+[2025-10-01 22:20:16] ALLOWED: Bash: python3 -c "
+import json
+import subprocess
+import os
+
+# Get current session info
+project_dir = os.path.expanduser('~/.claude/projects/-Users-abereyes-Projects-Master-Hooks/')
+files = [f for f in os.listdir(project_dir) if f.endswith('.jsonl')]
+if files:
+    latest_session = sorted(files, key=lambda x: os.path.getmtime(os.path.join(project_dir, x)))[-1]
+    transcript_path = os.path.join(project_dir, latest_session)
+    session_id = latest_session.replace('.jsonl', '')
+    
+    # Test manual compaction trigger
+    test_input = {
+        'session_id': session_id,
+        'transcript_path': transcript_path,
+        'hook_event_name': 'PreCompact',
+        'trigger': 'manual',
+        'custom_instructions': ''
+    }
+    
+    result = subprocess.run(
+        ['python3', '.claude/hooks/pre_compact.py'],
+        input=json.dumps(test_input),
+        text=True,
+        capture_output=True,
+        env={**os.environ, 'CLAUDE_PROJECT_DIR': os.getcwd()}
+    )
+    
+    print(f'Exit code: {result.returncode}')
+    if result.stdout:
+        print(f'Stdout: {result.stdout}')
+    if result.stderr:
+        print(f'Stderr: {result.stderr}')
+else:
+    print('No session files found')
+"
+[2025-10-01 22:20:22] INFO: PreCompact (manual): Saved state snapshot - 3 active tasks
+[2025-10-01 22:20:27] ALLOWED: Bash: ls -la /Users/abereyes/Projects/Master_Hooks/.claude/state/
+[2025-10-01 22:20:27] ALLOWED: Bash: cat /Users/abereyes/Projects/Master_Hooks/.claude/state/pre_compact_snapshot.json | python3 -m json.tool | head -40
+[2025-10-01 22:20:37] ALLOWED: Bash: cat /Users/abereyes/Projects/Master_Hooks/.claude/state/session_insights.md
+[2025-10-01 22:20:53] ALLOWED: Bash: python3 -c "
+import json
+import subprocess
+import os
+
+# Get current session info
+project_dir = os.path.expanduser('~/.claude/projects/-Users-abereyes-Projects-Master-Hooks/')
+files = [f for f in os.listdir(project_dir) if f.endswith('.jsonl')]
+if files:
+    latest_session = sorted(files, key=lambda x: os.path.getmtime(os.path.join(project_dir, x)))[-1]
+    transcript_path = os.path.join(project_dir, latest_session)
+    session_id = latest_session.replace('.jsonl', '')
+    
+    # Test session end
+    test_input = {
+        'session_id': session_id,
+        'transcript_path': transcript_path,
+        'cwd': os.getcwd(),
+        'hook_event_name': 'SessionEnd',
+        'reason': 'clear'
+    }
+    
+    result = subprocess.run(
+        ['python3', '.claude/hooks/session_end.py'],
+        input=json.dumps(test_input),
+        text=True,
+        capture_output=True,
+        env={**os.environ, 'CLAUDE_PROJECT_DIR': os.getcwd()}
+    )
+    
+    print(f'Exit code: {result.returncode}')
+    if result.stdout:
+        print(f'Stdout: {result.stdout}')
+    if result.stderr:
+        print(f'Stderr: {result.stderr}')
+else:
+    print('No session files found')
+"
+[2025-10-01 22:25:14] INFO: Session archived to /Users/abereyes/Projects/Master_Hooks/.claude/sessions/2025-10-01/session_22-25-14_ee04de84.md
+[2025-10-01 22:25:19] ALLOWED: Bash: head -60 /Users/abereyes/Projects/Master_Hooks/.claude/sessions/2025-10-01/session_22-25-14_ee04de84.md
+[2025-10-01 22:25:19] ALLOWED: Bash: ls -la /Users/abereyes/Projects/Master_Hooks/.claude/sessions/2025-10-01/
+[2025-10-01 22:25:26] INFO: Todo sync: [replace mode] 0 pending, 8 done
+[2025-10-01 22:25:31] ALLOWED: Bash: ls -la /Users/abereyes/Projects/Master_Hooks/.claude/state/
+[2025-10-01 22:26:46] ALLOWED: Bash: wc -l /Users/abereyes/Projects/Master_Hooks/docs/*.md
+[2025-10-01 22:26:46] ALLOWED: Bash: for file in /Users/abereyes/Projects/Master_Hooks/docs/*.md; do echo "=== $(basename "$file") ==="; grep -E "^#+\s" "$file" | head -20; echo; done
+[2025-10-01 22:27:01] ALLOWED: Bash: cd /Users/abereyes/Projects/Master_Hooks/docs && for file in *.md; do echo "=== $file ==="; grep -E "^#+\s" "$file" | head -20; echo; done
+[2025-10-01 22:39:35] INFO: Todo sync: [replace mode] 5 pending, 0 done
+[2025-10-01 22:39:41] INFO: Todo sync: [replace mode] 5 pending, 0 done
+[2025-10-01 22:40:18] Write: /Users/abereyes/Projects/Master_Hooks/docs/README.md
+[2025-10-01 22:40:26] INFO: Todo sync: [replace mode] 4 pending, 1 done
+[2025-10-01 22:41:52] Write: /Users/abereyes/Projects/Master_Hooks/docs/REFERENCE.md
+[2025-10-01 22:42:01] INFO: Todo sync: [replace mode] 2 pending, 3 done
+[2025-10-01 22:42:19] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
+[2025-10-01 22:42:29] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
+[2025-10-01 22:42:43] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
+[2025-10-01 22:42:55] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
+[2025-10-01 22:43:03] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
+[2025-10-01 22:43:20] Edit: /Users/abereyes/Projects/Master_Hooks/.claude/hooks/hook_utils.py
