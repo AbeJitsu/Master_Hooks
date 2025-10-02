@@ -460,3 +460,34 @@ EOF
 [2025-09-30 22:59:01] ALLOWED: Bash: git log --oneline -5
 [2025-09-30 22:59:12] INFO: Stop allowed: All tasks complete
 [2025-09-30 23:00:15] ALLOWED: Bash: git add .
+[2025-09-30 23:01:37] ALLOWED: Bash: git commit -m "$(cat <<'EOF'
+Implement full replacement-based todo sync with bidirectional updates
+
+Changed the todo sync behavior from merge-based to replacement-based, ensuring 
+todo.md always mirrors Claude's internal task state exactly.
+
+Changes:
+- Added `sync_mode` configuration option in config.json (defaults to "replace")
+- Modified todo_sync.py to support both "replace" and "merge" modes
+- Fixed empty todo list handling to properly clear todo.md when all tasks removed
+- Added mode indicator in activity log messages for clarity
+
+Benefits:
+- True bidirectional sync: todo.md exactly reflects Claude's internal todos
+- No orphaned tasks accumulate in the file
+- Clearing all todos in Claude now clears todo.md
+- Backward compatibility maintained with "merge" mode option
+
+The replacement mode makes Claude's TodoWrite tool the single source of truth
+for task management, eliminating sync inconsistencies.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+[2025-09-30 23:01:57] INFO: Stop allowed: All tasks complete
+[2025-09-30 23:06:28] INFO: Session started with 0 pending tasks
+[2025-10-01 21:17:49] ALLOWED: Bash: git status
+[2025-10-01 21:17:53] ALLOWED: Bash: git diff .claude/hooks/activity.log | head -20
+[2025-10-01 21:17:59] INFO: Stop allowed: All tasks complete
